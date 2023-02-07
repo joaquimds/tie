@@ -56,8 +56,7 @@ const doAttempt = async () => {
   await sleep(1)
 
   try {
-    // .mf-msg__info
-    const element = await page.waitForSelector("sdfsafdsaf", { timeout: 5000 })
+    const element = await page.waitForSelector(".mf-msg__info", { timeout: 5000 })
     await sleep(1)
     const text = await element.evaluate(el => el.textContent)
     if (!text.includes("no hay citas disponibles")) {
@@ -69,6 +68,7 @@ const doAttempt = async () => {
   }
 
   await browser.close();
+  console.log("sleeping for 15 minutes...")
   await sleep(15 * 60)
 }
 
