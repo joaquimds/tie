@@ -59,12 +59,14 @@ const doAttempt = async () => {
     console.log("entering citas management")
     await sleep(1)
 
+    await page.waitForSelector("#btnEnviar")
+    await sleep(1)
     await page.click('#btnEnviar')
     console.log("entering citas select")
     await sleep(1)
 
     try {
-      const element = await page.waitForSelector(".mf-msg__info", { timeout: 5000 })
+      const element = await page.waitForSelector(".mf-msg__info", { timeout: 15000 })
       await sleep(1)
       const text = await element.evaluate(el => el.textContent)
       if (!text.includes("no hay citas disponibles")) {
@@ -77,14 +79,13 @@ const doAttempt = async () => {
     }
   } finally {
     if (page) {
-      const date = (new Date()).toISOString()
+      const date = new Date().toISOString().replace(/-/g, "").replace(/:/g, "").split(".")[0]
       await page.screenshot({
         path: path.resolve(__dirname, 'screenshot_' + date + '.jpg')
       })
     }
     await browser.close();
   }
-
 }
 
 const run = async () => {
@@ -94,8 +95,8 @@ const run = async () => {
     } catch (e) {
       console.log(e)
     }
-    console.log("sleeping for 15 minutes...")
-    await sleep(15 * 60)
+    console.log("sleeping for 10 minutes...")
+    await sleep(10 * 60)
   }
 }
 
